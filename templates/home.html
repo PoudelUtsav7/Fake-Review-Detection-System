@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Powered Fake Review Detection</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/home.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <img src="../static/logo.png" alt="FakeReviewDetector" />
+        </div>
+        <ul class="nav-links">
+          <li id="login-link">
+            {% if username %}
+              <div class="user-menu">
+                <div class="user-header">
+                  <img src="../static/user-icon.png" alt="Profile" class="user-icon">
+                  <span>{{ username }}</span>
+                </div>
+                <div class="dropdown-content">
+                  <a href="{{ url_for('logout') }}">Logout</a>
+                </div>
+              </div>
+            {% else %}
+              <li id="login-link">
+                <a href="{{ url_for('login') }}">Login</a>
+              </li>
+            {% endif %}
+            
+          </li>
+          <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+              <input type="checkbox" id="checkbox" />
+              <span class="slider"></span>
+            </label>
+            <em>Dark Mode</em>
+          </div>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>🚀 AI-Powered Fake Review Detection Across Languages</h1>
+        <p>
+          Analyzing English, Romanized Nepali, and Devanagari Nepali reviews
+          using ML and NLP to separate real insights from fake hype.
+        </p>
+        <div class="cta-buttons">
+          <button onclick="location.href='{{ url_for('mainpage') }}'">
+            Try the App
+          </button>
+          <button onclick="location.href='{{ url_for('historypage') }}'">
+            View Prediction Reports
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="language-approaches">
+      <h2>Our Approach Across Languages</h2>
+      <div class="tabs">
+        <button class="tab-link active" onclick="openTab(event, 'english')">
+          English
+        </button>
+        <button class="tab-link" onclick="openTab(event, 'romanized-nepali')">
+          Romanized Nepali
+        </button>
+        <button class="tab-link" onclick="openTab(event, 'devanagari-nepali')">
+          Devanagari Nepali
+        </button>
+      </div>
+      <div id="english" class="tab-content active">
+        <h3>English Review Detection</h3>
+        <p>
+          Techniques: TF-IDF, Normalization → SVM, Logistic Regression, Random
+          Forest
+        </p>
+        <div id="english-graph"></div>
+      </div>
+      <div id="romanized-nepali" class="tab-content">
+        <h3>Romanized Nepali Review Detection</h3>
+        <p>Techniques: TF-IDF, Word2Vec, FastText → Model Performance</p>
+        <div id="romanized-nepali-graph"></div>
+      </div>
+      <div id="devanagari-nepali" class="tab-content">
+        <h3>Devanagari Nepali Review Detection</h3>
+        <p>Techniques: NEPBERTa Model → Accuracy & Findings</p>
+        <div id="devanagari-nepali-graph"></div>
+      </div>
+    </section>
+
+    <section class="flip-cards">
+      <h2>Feature Engineering Techniques</h2>
+      <div class="flip-card-container">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <!-- <img src="tfidf-icon.png" alt="TF-IDF" /> -->
+              <h4>TF-IDF</h4>
+            </div>
+            <div class="flip-card-back">
+              <p>TF-IDF is a statistical measure used in NLP to evaluate the importance of a word in a document relative to a collection of documents.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <!-- <img src="word2vec-icon.png" alt="Word2Vec" /> -->
+              <h4>Word2Vec</h4>
+            </div>
+            <div class="flip-card-back">
+              <p>Word2Vec is a family of model architectures and optimizations that can be used to learn word embeddings from large datasets.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <!-- <img src="../static/fasttext-icon.png" alt="FastText" /> -->
+              <h4>FastText</h4>
+            </div>
+            <div class="flip-card-back">
+              <p>
+                FastText is an open-source, free, lightweight library that allows users to learn text representations and text classifiers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dataset-distribution">
+      <h2>Training Data Distribution</h2>
+      <div class="tabs">
+          <button class="tab-link active" onclick="openPieTab(event, 'english-pie-chart')">English</button>
+          <button class="tab-link" onclick="openPieTab(event, 'romanized-nepali-pie-chart')">Romanized Nepali</button>
+          <button class="tab-link" onclick="openPieTab(event, 'devanagari-nepali-pie-chart')">Devanagari Nepali</button>
+      </div>
+      
+      <div id="english-pie-chart" class="pie-tab-content active"></div>
+      <div id="romanized-nepali-pie-chart" class="pie-tab-content"></div>
+      <div id="devanagari-nepali-pie-chart" class="pie-tab-content"></div>
+  </section>
+  
+    <section class="pipeline">
+      <h2>Our Pipeline</h2>
+      <div class="timeline">
+        <div class="timeline-step">
+          <span>1</span>
+          <p>Input</p>
+        </div>
+        <div class="timeline-step">
+          <span>2</span>
+          <p>Preprocessing</p>
+        </div>
+        <div class="timeline-step">
+          <span>3</span>
+          <p>Embeddings</p>
+        </div>
+        <div class="timeline-step">
+          <span>4</span>
+          <p>Model Training</p>
+        </div>
+        <div class="timeline-step">
+          <span>5</span>
+          <p>Output</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="real-world-examples">
+      <h2>Real-World Examples</h2>
+      <div class="example">
+        <h3>Fake Review</h3>
+        <p>"The product is okay. The design is good, but the performance didn’t feel that impressive. The battery drains quickly, and the camera is just average. It should be a bit better for the price"</p>
+        <p class="analysis">
+          Analysis: Generic wording - The review can be applied to any electronics and Emotionless tone - Review feels like template style sentence. 
+        </p>
+      </div>
+      <div class="example">
+        <h3>Real Review</h3>
+        <p>"I ordered this for my husband...he loves the set...especially the noodle strainer:)"</p>
+        <p class="analysis">
+          Analysis: Includes personal details and also specifies product feature which indicates authenticity and uniqueness.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-us">
+      <h2>About Us</h2>
+      <p>
+        At Fake Review Detection, we are committed to enhancing online trust and transparency by using machine learning techniques to detect fake product reviews. Our platform analyzes English, Roman Nepali and Devnagari text using different algortihms like SVM, Logistic Regression, Random Forest, aswell as pre-trained architectures such as NepaliBERT. We employ a combination of TF-IDF, Word2Vec, and FastText embeddings, ensuring that our detection system is both robust and accurate. For Nepali reviews, we process both Devanagari and Romanized scripts, carefully preserving linguistic patterns including local slangs to capture subtle patterns in deceptive content. Our goal is simple: to empower consumers with reliable information by filtering out fake reviews, allowing businesses to maintain their credibility and users to make informed decisions.
+      </p>
+      <h4>Our Team:</h4>
+      <ul>
+        <li>Achyut Bhattarai</li>
+        <li>Pramish Sapkota</li>
+        <li>Rupesh Chaudhary </li>   
+        <li>Utsav Poudel</li>
+      </ul>
+      <div class="contact-header" onclick="toggleContactForm()">
+        <h3>Contact Us</h3>
+        <span class="material-icons gmail-icon">mail</span>
+      </div>
+    
+      <!-- Contact Form Popup -->
+      <div class="contact-popup">
+        <div class="contact-form-container">
+          <button class="close-btn" onclick="toggleContactForm()">&times;</button>
+          <form action="{{ url_for('contact.contact') }}" method="POST" class="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="flash {{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    
+    <footer>
+      <p>&copy; 2025 FakeReviewPrediction</p>
+    </footer>
+    
+    <script>
+      // Toggle contact form visibility
+      function toggleContactForm() {
+        document.querySelector('.contact-popup').classList.toggle('active');
+      }
+      
+      // Close popup when clicking outside
+      document.querySelector('.contact-popup').addEventListener('click', function(e) {
+        if(e.target === this) {
+          this.classList.remove('active');
+        }
+      });
+    </script>
+
+    <script src="../static/js/home.js"></script>
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/bargraph.js"></script>
+    <script src="../static/js/piechart.js"></script>
+  </body>
+</html>

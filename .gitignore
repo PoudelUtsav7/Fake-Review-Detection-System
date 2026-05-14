@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+.vscode/
+fine_tuned_nepbert/
+*.bin
+*.pkl
+*.gz
+translated_4000_reviews.xlsx
+app.py
